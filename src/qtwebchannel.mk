@@ -4,7 +4,7 @@
 PKG             := qtwebchannel
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION   = $(qtbase_VERSION)
-$(PKG)_CHECKSUM := 7c45ecb9c4226207f184b5cf25d1a18d650075da
+$(PKG)_CHECKSUM := 7f4295ee57cd4ecba3cb263452d2a08d501b45c9a2b8b7794b6a97d7652f15d0
 $(PKG)_SUBDIR    = $(subst qtbase,qtwebchannel,$(qtbase_SUBDIR))
 $(PKG)_FILE      = $(subst qtbase,qtwebchannel,$(qtbase_FILE))
 $(PKG)_URL       = $(subst qtbase,qtwebchannel,$(qtbase_URL))

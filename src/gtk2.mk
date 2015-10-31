@@ -4,11 +4,11 @@
 PKG             := gtk2
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION  := 2.24.28
-$(PKG)_CHECKSUM := f3c2f1a3728ed51d08054f6b4c7384fbf99477c0
+$(PKG)_CHECKSUM := b2c6441e98bc5232e5f9bba6965075dcf580a8726398f7374d39f90b88ed4656
 $(PKG)_SUBDIR   := gtk+-$($(PKG)_VERSION)
 $(PKG)_FILE     := gtk+-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := http://ftp.gnome.org/pub/gnome/sources/gtk+/$(call SHORT_PKG_VERSION,$(PKG))/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc gettext libpng jpeg tiff jasper glib atk pango cairo gdk-pixbuf
+$(PKG)_DEPS     := gcc atk cairo gdk-pixbuf gettext glib jasper jpeg libpng pango tiff
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://git.gnome.org/browse/gtk+/refs/tags' | \

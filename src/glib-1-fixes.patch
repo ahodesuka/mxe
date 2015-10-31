@@ -3,58 +3,10 @@ See index.html for further information.
 
 Contains ad hoc patches for cross building.
 
-From f02df804c59584aac5cfb164b4ddad898b156883 Mon Sep 17 00:00:00 2001
-From: "a@mxe.org" <a@mxe.org>
-Date: Thu, 23 Sep 2010 21:41:51 +0200
-Subject: [PATCH 1/8] optional gettext
-
-
-diff --git a/configure.ac b/configure.ac
-index a0237cb..7739b89 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -3600,15 +3600,6 @@ gio/tests/services/Makefile
- gio/tests/services/org.gtk.GDBus.Examples.ObjectManager.service
- gio/tests/modules/Makefile
- po/Makefile.in
--docs/Makefile
--docs/reference/Makefile
--docs/reference/glib/Makefile
--docs/reference/glib/version.xml
--docs/reference/gobject/Makefile
--docs/reference/gobject/version.xml
--docs/reference/gio/Makefile
--docs/reference/gio/gdbus-object-manager-example/Makefile
--docs/reference/gio/version.xml
- tests/Makefile
- tests/gobject/Makefile
- tests/refcount/Makefile
-
-diff --git a/glib/gi18n.h b/glib/gi18n.h
-index f765c3d..a1e5e1f 100644
---- a/glib/gi18n.h
-+++ b/glib/gi18n.h
-@@ -20,7 +20,12 @@
- 
- #include <glib.h>
- 
-+#ifdef ENABLE_NLS
- #include <libintl.h>
-+#else
-+#define gettext(String) (String)
-+#endif
-+
- #include <string.h>
- 
- #define  _(String) gettext (String)
--- 
-1.8.4.5
-
-
-From cea8581fa1d9e6eb39114d11f02bb9c17f366f41 Mon Sep 17 00:00:00 2001
-From: "a@mxe.org" <a@mxe.org>
+From 544cc902caf39c937bbac7c9f7b07f5fcb869d81 Mon Sep 17 00:00:00 2001
+From: MXE
 Date: Thu, 23 Sep 2010 21:42:46 +0200
-Subject: [PATCH 2/8] fix tool paths
+Subject: [PATCH 1/6] fix tool paths
 
 
 diff --git a/glib-2.0.pc.in b/glib-2.0.pc.in
@@ -75,13 +27,13 @@ index 275fc01..ac09887 100644
  Name: GLib
  Description: C Utility Library
 -- 
-1.8.4.5
+2.3.2 (Apple Git-55)
 
 
-From cc66017373a478c6954728dff0468e48b749c0f9 Mon Sep 17 00:00:00 2001
-From: "a@mxe.org" <a@mxe.org>
+From 10e38774090ee198d7f70e80f7dd29ef18dcd9d9 Mon Sep 17 00:00:00 2001
+From: MXE
 Date: Fri, 15 Jun 2012 15:25:01 +0200
-Subject: [PATCH 3/8] Avoid DllMain symbol conflict when linking statically
+Subject: [PATCH 2/6] Avoid DllMain symbol conflict when linking statically
 
 
 diff --git a/gio/giomodule.c b/gio/giomodule.c
@@ -136,17 +88,17 @@ index 24efe9d..6fb9e25 100644
           LPVOID    lpvReserved)
  {
 -- 
-1.8.4.5
+2.3.2 (Apple Git-55)
 
 
-From 1e1ac2fa65a14491f3092355ae71ce304020b7f7 Mon Sep 17 00:00:00 2001
-From: "a@mxe.org" <a@mxe.org>
+From ca4e5a60cc9176279bd27a44c679e18666fac5e6 Mon Sep 17 00:00:00 2001
+From: MXE
 Date: Fri, 15 Jun 2012 15:27:22 +0200
-Subject: [PATCH 4/8] Allow building without inotify support
+Subject: [PATCH 3/6] Allow building without inotify support
 
 
 diff --git a/configure.ac b/configure.ac
-index 7739b89..5ec0ccd 100644
+index 4a904a4..427d9e2 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -1669,10 +1669,16 @@ dnl *****************************
@@ -167,18 +119,18 @@ index 7739b89..5ec0ccd 100644
  AM_CONDITIONAL(HAVE_INOTIFY, [test "$inotify_support" = "yes"])
  
 -- 
-1.8.4.5
+2.3.2 (Apple Git-55)
 
 
-From 4e9c897df8226916c31d47022e4c6b45f4450070 Mon Sep 17 00:00:00 2001
-From: "a@mxe.org" <a@mxe.org>
+From 024bc122e81e418096281400b4b5340a7949eca1 Mon Sep 17 00:00:00 2001
+From: MXE
 Date: Fri, 15 Jun 2012 15:28:14 +0200
-Subject: [PATCH 5/8] Make sure STDC_HEADERS is set for AC_CHECK_ALIGNOF.
+Subject: [PATCH 4/6] Make sure STDC_HEADERS is set for AC_CHECK_ALIGNOF.
  Backported from upstream
 
 
 diff --git a/configure.ac b/configure.ac
-index 5ec0ccd..174c27f 100644
+index 427d9e2..afb6232 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -499,6 +499,8 @@ LT_INIT([disable-static win32-dll])
@@ -191,13 +143,13 @@ index 5ec0ccd..174c27f 100644
  AS_IF([test "$glib_native_win32" = "yes"], [
    if test x$enable_static = xyes -a x$enable_shared = xyes; then
 -- 
-1.8.4.5
+2.3.2 (Apple Git-55)
 
 
-From d1e9341c08021818122fb60d1d7e6cd6deb3e8c7 Mon Sep 17 00:00:00 2001
-From: "a@mxe.org" <a@mxe.org>
+From bb1a73677634f3a70dbe5baac36ba8e6acf4f4cd Mon Sep 17 00:00:00 2001
+From: MXE
 Date: Fri, 15 Jun 2012 15:29:06 +0200
-Subject: [PATCH 6/8] Link with dnsapi
+Subject: [PATCH 5/6] Link with dnsapi
 
 
 diff --git a/gio-2.0.pc.in b/gio-2.0.pc.in
@@ -213,13 +165,13 @@ index 899af0c..b8308f8 100644
  Libs.private: @ZLIB_LIBS@ @NETWORK_LIBS@ @SELINUX_LIBS@ @COCOA_LIBS@ @CARBON_LIBS@
  Cflags:
 -- 
-1.8.4.5
+2.3.2 (Apple Git-55)
 
 
-From aa921eb646aac5cd48f669ebfcbc44a065dbf9ec Mon Sep 17 00:00:00 2001
-From: "a@mxe.org" <a@mxe.org>
+From bb796f32a497ef983e2e7483cab25b6142e15630 Mon Sep 17 00:00:00 2001
+From: MXE
 Date: Fri, 15 Jun 2012 15:29:38 +0200
-Subject: [PATCH 7/8] Ensure globals are initialized even when DllMain is not
+Subject: [PATCH 6/6] Ensure globals are initialized even when DllMain is not
  being run
 
 
@@ -593,94 +545,5 @@ index 275ecc6..8285187 100644
      g_thread_xp_init ();
  
 -- 
-1.8.4.5
-
-
-From 596b53566e1f667321fbdec72b4c490afe000f4d Mon Sep 17 00:00:00 2001
-From: "a@mxe.org" <a@mxe.org>
-Date: Mon, 18 Jun 2012 16:02:12 +0200
-Subject: [PATCH 8/8] kill docs and gtk-doc dependence (mxe-specific)
-
-
-diff --git a/Makefile.am b/Makefile.am
-index a1c9c33..d81491c 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -6,7 +6,7 @@ include $(top_srcdir)/glib.mk
- 
- ACLOCAL_AMFLAGS = -I m4macros ${ACLOCAL_FLAGS}
- 
--SUBDIRS = . m4macros glib gmodule gthread gobject gio po docs tests
-+SUBDIRS = . m4macros glib gmodule gthread gobject gio po tests
- DIST_SUBDIRS = $(SUBDIRS) build
- 
- bin_SCRIPTS = glib-gettextize
-@@ -63,7 +63,6 @@ EXTRA_DIST += 			\
- 	gio-unix-2.0.pc.in	\
- 	gio-windows-2.0.pc.in	\
- 	check-abis.sh		\
--	gtk-doc.make		\
- 	$(NULL)
- 
- 
-diff --git a/autogen.sh b/autogen.sh
-index 4bbc00d..bc0ab0b 100755
---- a/autogen.sh
-+++ b/autogen.sh
-@@ -7,18 +7,6 @@ test -n "$srcdir" || srcdir=.
- olddir=`pwd`
- cd "$srcdir"
- 
--GTKDOCIZE=$(which gtkdocize 2>/dev/null)
--if test -z $GTKDOCIZE; then
--        echo "You don't have gtk-doc installed, and thus won't be able to generate the documentation."
--        rm -f gtk-doc.make
--        cat > gtk-doc.make <<EOF
--EXTRA_DIST =
--CLEANFILES =
--EOF
--else
--        gtkdocize || exit $?
--fi
--
- AUTORECONF=`which autoreconf`
- if test -z $AUTORECONF; then
-         echo "*** No autoreconf found, please install it ***"
-diff --git a/configure.ac b/configure.ac
-index 174c27f..5f033ab 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -2579,13 +2579,6 @@ AS_IF([ test $cross_compiling = yes ], [
- dnl **************************
- dnl *** Checks for gtk-doc ***
- dnl **************************
--# gtkdocize greps for ^GTK_DOC_CHECK and parses it, so you need to have
--# it on it's own line.
--m4_ifdef([GTK_DOC_CHECK], [
--GTK_DOC_CHECK([1.20], [--flavour no-tmpl])
--],[
--AM_CONDITIONAL([ENABLE_GTK_DOC],[false])
--])
- 
- AC_ARG_ENABLE(man,
-               [AS_HELP_STRING([--enable-man],
-diff --git a/gio/tests/gdbus-object-manager-example/Makefile.am b/gio/tests/gdbus-object-manager-example/Makefile.am
-index d6d1412..79141ec 100644
---- a/gio/tests/gdbus-object-manager-example/Makefile.am
-+++ b/gio/tests/gdbus-object-manager-example/Makefile.am
-@@ -25,12 +25,6 @@ $(GDBUS_GENERATED) : gdbus-example-objectmanager.xml Makefile $(top_builddir)/gi
- 
- test_ltlibraries = libgdbus-example-objectmanager.la
- 
--if ENABLE_GTK_DOC
--# The docs pull these in, so we need them even if not doing 'make check'
--BUILT_SOURCES += $(GDBUS_GENERATED)
--noinst_LTLIBRARIES += libgdbus-example-objectmanager.la
--endif
--
- nodist_libgdbus_example_objectmanager_la_SOURCES = \
- 	gdbus-example-objectmanager-generated.h		\
- 	gdbus-example-objectmanager-generated.c
--- 
-1.8.4.5
+2.3.2 (Apple Git-55)
 

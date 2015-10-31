@@ -4,11 +4,11 @@
 PKG             := glib
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION  := 2.44.1
-$(PKG)_CHECKSUM := 88176375f97ecd9ff45e7b5fd5ab80d4b7db6b34
+$(PKG)_CHECKSUM := 8811deacaf8a503d0a9b701777ea079ca6a4277be10e3d730d2112735d5eca07
 $(PKG)_SUBDIR   := glib-$($(PKG)_VERSION)
 $(PKG)_FILE     := glib-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := http://ftp.gnome.org/pub/gnome/sources/glib/$(call SHORT_PKG_VERSION,$(PKG))/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc gettext pcre libiconv zlib libffi dbus
+$(PKG)_DEPS     := gcc dbus gettext libffi libiconv pcre zlib
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://git.gnome.org/browse/glib/refs/tags' | \
@@ -69,7 +69,6 @@ define $(PKG)_SYMLINK
 endef
 
 define $(PKG)_BUILD
-	rm -r '$(1)/docs'
     cd '$(1)' && NOCONFIGURE=true ./autogen.sh
     rm -f '$(PREFIX)/$(TARGET)/bin/glib-*'
 

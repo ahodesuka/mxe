@@ -4,12 +4,14 @@
 PKG             := gcc
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION  := 5.2.0
-$(PKG)_CHECKSUM := fe3f5390949d47054b613edc36c557eb1d51c18e
+$(PKG)_CHECKSUM := 5f835b04b5f7dd4f4d2dc96190ec1621b8d89f2dc6f638f9f8bc1b1014ba8cad
 $(PKG)_SUBDIR   := gcc-$($(PKG)_VERSION)
 $(PKG)_FILE     := gcc-$($(PKG)_VERSION).tar.bz2
 $(PKG)_URL      := http://ftp.gnu.org/pub/gnu/gcc/gcc-$($(PKG)_VERSION)/$($(PKG)_FILE)
 $(PKG)_URL_2    := ftp://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-$($(PKG)_VERSION)/$($(PKG)_FILE)
-$(PKG)_DEPS     := binutils gcc-gmp gcc-isl gcc-mpc gcc-mpfr mingw-w64
+$(PKG)_DEPS     := binutils mingw-w64
+
+$(PKG)_FILE_$(BUILD) :=
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://ftp.gnu.org/gnu/gcc/?C=M;O=D' | \
@@ -38,10 +40,10 @@ define $(PKG)_CONFIGURE
         --disable-win32-registry \
         --enable-threads=win32 \
         --disable-libgomp \
-        --with-gmp='$(PREFIX)' \
-        --with-isl='$(PREFIX)' \
-        --with-mpc='$(PREFIX)' \
-        --with-mpfr='$(PREFIX)' \
+        --with-gmp='$(PREFIX)/$(BUILD)' \
+        --with-isl='$(PREFIX)/$(BUILD)' \
+        --with-mpc='$(PREFIX)/$(BUILD)' \
+        --with-mpfr='$(PREFIX)/$(BUILD)' \
         --with-as='$(PREFIX)/bin/$(TARGET)-as' \
         --with-ld='$(PREFIX)/bin/$(TARGET)-ld' \
         --with-nm='$(PREFIX)/bin/$(TARGET)-nm' \
@@ -53,8 +55,11 @@ define $(PKG)_POST_BUILD
     rm -f $(addprefix $(PREFIX)/$(TARGET)/bin/, c++ g++ gcc gfortran)
     -mv '$(PREFIX)/lib/gcc/$(TARGET)/lib/'* '$(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_VERSION)/'
     -mv '$(PREFIX)/lib/gcc/$(TARGET)/'*.dll '$(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_VERSION)/'
-    -cp '$(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_VERSION)/'*.dll '$(PREFIX)/$(TARGET)/bin/'
+    -mv '$(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_VERSION)/'*.dll '$(PREFIX)/$(TARGET)/bin/'
     -cp '$(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_VERSION)/'*.dll.a '$(PREFIX)/$(TARGET)/lib/'
+
+    # remove incorrectly installed libcc1
+    rm -f '$(PREFIX)/lib/'libcc1*
 endef
 
 define $(PKG)_BUILD_mingw-w64
@@ -76,6 +81,9 @@ define $(PKG)_BUILD_mingw-w64
     # build rest of gcc
     cd '$(1).build'
     $(MAKE) -C '$(1).build' -j '$(JOBS)'
+
+    # cc1libdir isn't passed to subdirs so install correctly and rm later
+    $(MAKE) -C '$(1).build/libcc1' -j 1 install cc1libdir='$(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_VERSION)'
     $(MAKE) -C '$(1).build' -j 1 install
 
     $($(PKG)_POST_BUILD)

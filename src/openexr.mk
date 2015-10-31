@@ -4,7 +4,7 @@
 PKG             := openexr
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION  := 2.2.0
-$(PKG)_CHECKSUM := d09a68c4443b7a12a0484c073adaef348b44cb92
+$(PKG)_CHECKSUM := 36a012f6c43213f840ce29a8b182700f6cf6b214bea0d5735594136b44914231
 $(PKG)_SUBDIR   := openexr-$($(PKG)_VERSION)
 $(PKG)_FILE     := openexr-$($(PKG)_VERSION).tar.gz
 $(PKG)_URL      := http://download.savannah.nongnu.org/releases/openexr/$($(PKG)_FILE)
@@ -41,16 +41,16 @@ define $(PKG)_BUILD
         --disable-posix-sem \
         --disable-ilmbasetest \
         PKG_CONFIG='$(PREFIX)/bin/$(TARGET)-pkg-config' \
-        CXXFLAGS="-g -O2 -fpermissive"
+        CXXFLAGS="-g -O2"
     # build the code generator manually
-    cd '$(1)/IlmImf' && g++ -O2 \
+    cd '$(1)/IlmImf' && $(BUILD_CXX) -O2 \
         -I'$(1)/ilmbase/include/OpenEXR' \
         -L'$(1)/ilmbase/lib' \
         b44ExpLogTable.cpp \
         -lHalf \
         -o b44ExpLogTable
     '$(1)/IlmImf/b44ExpLogTable' > '$(1)/IlmImf/b44ExpLogTable.h'
-    cd '$(1)/IlmImf' && g++ -O2 \
+    cd '$(1)/IlmImf' && $(BUILD_CXX) -O2 \
         -I'$(1)/config' -I. \
         -I'$(1)/ilmbase/include/OpenEXR' \
         -L'$(1)/ilmbase/lib' \

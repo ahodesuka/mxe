@@ -4,7 +4,7 @@
 PKG             := unrar
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION  := 5.3.2
-$(PKG)_CHECKSUM := 4940a81febac52e7f1fd0140acc148b09cba864e
+$(PKG)_CHECKSUM := 2d8712eed32367b1a404633f230f94f545c1f2ce0552f851266b00c261a786ea
 $(PKG)_SUBDIR   := $(PKG)
 $(PKG)_FILE     := $(PKG)src-$($(PKG)_VERSION).tar.gz
 $(PKG)_URL      := http://www.rarlab.com/rar/$($(PKG)_FILE)

@@ -4,7 +4,7 @@
 PKG             := libconfig
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION  := 1.5
-$(PKG)_CHECKSUM := 24306c7efce07669a4053d0977a45e2f3a3add79
+$(PKG)_CHECKSUM := e31daa390d8e4461c8830512fe2e13ba1a3d6a02a2305a02429eec61e68703f6
 $(PKG)_SUBDIR   := $(PKG)-$($(PKG)_VERSION)
 $(PKG)_FILE     := $(PKG)-$($(PKG)_VERSION).tar.gz
 $(PKG)_URL      := http://www.hyperrealm.com/libconfig/$($(PKG)_FILE)

@@ -612,6 +612,10 @@ USE_OSGPLUGIN(&lt;plugin2&gt;)
         <td><a href="http://tukaani.org/xz/">XZ Utils</a></td>
         <td></td>
     </tr>
+    <tr>
+        <td><a href="http://www.gdk-pixbuf.org/">gdk-pixbuf</a></td>
+        <td></td>
+    </tr>
     </table>
 
     <h3 id="requirements-debian">Debian and derivatives</h3>
@@ -619,8 +623,8 @@ USE_OSGPLUGIN(&lt;plugin2&gt;)
     <!-- http://www.debian.org/distrib/packages#search_packages -->
     <pre>apt-get install \
     autoconf automake autopoint bash bison bzip2 cmake flex \
-    gettext git g++ gperf intltool libffi-dev libtool \
-    libltdl-dev libssl-dev libxml-parser-perl make openssl \
+    gettext git g++ gperf intltool libffi-dev libgdk-pixbuf2.0-dev \
+    libtool libltdl-dev libssl-dev libxml-parser-perl make openssl \
     p7zip-full patch perl pkg-config python ruby scons sed \
     unzip wget xz-utils</pre>
 
@@ -644,7 +648,7 @@ USE_OSGPLUGIN(&lt;plugin2&gt;)
     <!-- https://admin.fedoraproject.org/pkgdb/ -->
     <pre>yum install \
     autoconf automake bash bison bzip2 cmake flex gcc-c++ \
-    gettext git gperf intltool make sed libffi-devel \
+    gdk-pixbuf-devel gettext git gperf intltool make sed libffi-devel \
     libtool openssl-devel p7zip patch perl pkgconfig \
     python ruby scons unzip wget xz</pre>
 
@@ -658,7 +662,7 @@ USE_OSGPLUGIN(&lt;plugin2&gt;)
     <!-- http://www.freshports.org/ -->
     <pre>pkg_add -r \
     automake autoconf bash bison cmake coreutils flex \
-    gettext git glib20 gmake gperf gsed intltool libffi \
+    gdk-pixbuf2 gettext git glib20 gmake gperf gsed intltool libffi \
     libtool openssl p5-XML-Parser p7zip patch perl \
     pkgconf python ruby scons unzip wget</pre>
 
@@ -696,7 +700,7 @@ USE_OSGPLUGIN(&lt;plugin2&gt;)
     <!-- http://www.frugalware.org/packages -->
     <pre>pacman-g2 -S \
     autoconf automake bash bzip2 bison cmake flex gcc \
-    gettext git gperf intltool make sed libffi libtool \
+    gdk-pixbuf2 gettext git gperf intltool make sed libffi libtool \
     openssl patch perl perl-xml-parser pkgconfig python \
     ruby scons unzip wget xz xz-lzma</pre>
 
@@ -718,7 +722,7 @@ USE_OSGPLUGIN(&lt;plugin2&gt;)
     sys-devel/patch dev-lang/perl dev-perl/XML-Parser \
     dev-util/pkgconfig dev-lang/python dev-lang/ruby \
     dev-util/scons app-arch/unzip net-misc/wget \
-    app-arch/xz-utils</pre>
+    app-arch/xz-utils x11-libs/gdk-pixbuf</pre>
 
     <h3 id="requirements-macos">Mac OS X</h3>
 
@@ -734,7 +738,7 @@ USE_OSGPLUGIN(&lt;plugin2&gt;)
     </p>
     <!-- http://www.macports.org/ports.php -->
     <pre>sudo port install \
-    glib2 intltool p5-xml-parser p7zip gpatch scons wget xz</pre>
+    gdk-pixbuf2 glib2 intltool p5-xml-parser p7zip gpatch scons wget xz</pre>
     <h5 id="requirements-macos-method-2">Method 2 - Rudix</h5>
     <p>
     Install <a href="http://rudix.org/">Rudix</a> you can make it with following command
@@ -745,6 +749,8 @@ USE_OSGPLUGIN(&lt;plugin2&gt;)
     then run:
     </p>
     <pre>sudo rudix install glib pkg-config scons wget xz</pre>
+    Note: <b>gdk-pixbuf2</b> is not installed in method 2,
+    so you can not build <b>gtk3</b>.
     <h4 id="requirements-macos-step-2">Step 2</h4>
     <p>
     After installing pre-requirement run from within the mxe directory:
@@ -763,7 +769,7 @@ USE_OSGPLUGIN(&lt;plugin2&gt;)
     <!-- http://software.opensuse.org/131/en -->
     <pre>zypper install -R \
     autoconf automake bash bison bzip2 cmake flex gcc-c++ \
-    gettext-tools git gperf intltool libffi-devel libtool \
+    gdk-pixbuf-devel gettext-tools git gperf intltool libffi-devel libtool \
     make openssl libopenssl-devel p7zip patch perl \
     perl-XML-Parser pkg-config python ruby scons sed unzip \
     wget xz</pre>
@@ -1073,6 +1079,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://www.gnu.org/software/automake/">automake</a></td>
     </tr>
     <tr>
+        <td class="package">db</td>
+        <td class="website"><a href="http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/overview/index.html">Oracle Berkeley DB</a></td>
+    </tr>
+    <tr>
         <td class="package">bfd</td>
         <td class="website"><a href="https://www.gnu.org/software/binutils/">Binary File Descriptor library</a></td>
     </tr>
@@ -1143,6 +1153,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">chromaprint</td>
         <td class="website"><a href="http://acoustid.org/chromaprint">Chromaprint</a></td>
+    </tr>
+    <tr>
+        <td class="package">cimg</td>
+        <td class="website"><a href="http://cimg.eu/">CImg Library</a></td>
     </tr>
     <tr>
         <td class="package">cmake</td>
@@ -1277,22 +1291,6 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://gcc.gnu.org/">GCC</a></td>
     </tr>
     <tr>
-        <td class="package">gcc-gmp</td>
-        <td class="website"><a href="http://www.gmplib.org/">GMP for GCC</a></td>
-    </tr>
-    <tr>
-        <td class="package">gcc-isl</td>
-        <td class="website"><a href="http://isl.gforge.inria.fr/">ISL for GCC</a></td>
-    </tr>
-    <tr>
-        <td class="package">gcc-mpc</td>
-        <td class="website"><a href="http://www.multiprecision.org/">MPC for GCC</a></td>
-    </tr>
-    <tr>
-        <td class="package">gcc-mpfr</td>
-        <td class="website"><a href="http://www.mpfr.org/">MPFR for GCC</a></td>
-    </tr>
-    <tr>
         <td class="package">gd</td>
         <td class="website"><a href="http://www.libgd.org/">GD  (without support for xpm)</a></td>
     </tr>
@@ -1393,6 +1391,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://www.gtk.org/">GTK+</a></td>
     </tr>
     <tr>
+        <td class="package">gtk3</td>
+        <td class="website"><a href="http://www.gtk.org/">GTK+</a></td>
+    </tr>
+    <tr>
         <td class="package">gtkglarea</td>
         <td class="website"><a href="http://www.mono-project.com/GtkGLArea/">GtkGLArea</a></td>
     </tr>
@@ -1410,6 +1412,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     </tr>
     <tr>
         <td class="package">gtkmm2</td>
+        <td class="website"><a href="http://www.gtkmm.org/">GTKMM</a></td>
+    </tr>
+    <tr>
+        <td class="package">gtkmm3</td>
         <td class="website"><a href="http://www.gtkmm.org/">GTKMM</a></td>
     </tr>
     <tr>
@@ -1554,7 +1560,7 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     </tr>
     <tr>
         <td class="package">libcomm14cux</td>
-        <td class="website"><a href="https://www.github.org/colinbourassa/libcomm14cux/">libcomm14cux</a></td>
+        <td class="website"><a href="https://github.com/colinbourassa/libcomm14cux/">libcomm14cux</a></td>
     </tr>
     <tr>
         <td class="package">libconfig</td>
@@ -1631,6 +1637,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">libgeotiff</td>
         <td class="website"><a href="http://trac.osgeo.org/geotiff/">GeoTiff</a></td>
+    </tr>
+    <tr>
+        <td class="package">libgit2</td>
+        <td class="website"><a href="https://libgit2.github.com/">libgit2</a></td>
     </tr>
     <tr>
         <td class="package">libglade</td>
@@ -1725,6 +1735,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://www.musepack.net/">libmpcdec</a></td>
     </tr>
     <tr>
+        <td class="package">libmysqlclient</td>
+        <td class="website"><a href="https://dev.mysql.com/downloads/connector/c/">libmysqlclient</a></td>
+    </tr>
+    <tr>
         <td class="package">libntlm</td>
         <td class="website"><a href="http://www.nongnu.org/libntlm/">Libntlm</a></td>
     </tr>
@@ -1747,6 +1761,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">libpaper</td>
         <td class="website"><a href="http://packages.debian.org/unstable/libpaper1">libpaper</a></td>
+    </tr>
+    <tr>
+        <td class="package">libplist</td>
+        <td class="website"><a href="https://github.com/libimobiledevice/libplist">libplist</a></td>
     </tr>
     <tr>
         <td class="package">libpng</td>
@@ -1787,6 +1805,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">libtool</td>
         <td class="website"><a href="https://www.gnu.org/software/libtool/">GNU Libtool</a></td>
+    </tr>
+    <tr>
+        <td class="package">libtorrent-rasterbar</td>
+        <td class="website"><a href="http://www.rasterbar.com/products/libtorrent/">libtorrent-rasterbar</a></td>
     </tr>
     <tr>
         <td class="package">libunistring</td>
@@ -2019,6 +2041,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">opusfile</td>
         <td class="website"><a href="http://opus-codec.org/">opusfile</a></td>
+    </tr>
+    <tr>
+        <td class="package">ossim</td>
+        <td class="website"><a href="http://trac.osgeo.org/ossim">OSSIM</a></td>
     </tr>
     <tr>
         <td class="package">pango</td>
@@ -2381,6 +2407,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://www.speex.org/">Speex</a></td>
     </tr>
     <tr>
+        <td class="package">speexdsp</td>
+        <td class="website"><a href="http://www.speex.org/">SpeexDSP</a></td>
+    </tr>
+    <tr>
         <td class="package">sqlite</td>
         <td class="website"><a href="http://www.sqlite.org/">SQLite</a></td>
     </tr>
@@ -2395,6 +2425,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">taglib</td>
         <td class="website"><a href="http://developer.kde.org/~wheeler/taglib.html">TagLib</a></td>
+    </tr>
+    <tr>
+        <td class="package">tclap</td>
+        <td class="website"><a href="http://tclap.sourceforge.net/">tclap</a></td>
     </tr>
     <tr>
         <td class="package">teem</td>
@@ -2431,6 +2465,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">unrar</td>
         <td class="website"><a href="http://www.rarlab.com/rar_add.htm">unRAR</a></td>
+    <tr>
+    </tr>
+        <td class="package">unrtf</td>
+        <td class="website"><a href="https://www.gnu.org/software/unrtf/">unRTF</a></td>
     </tr>
     <tr>
         <td class="package">vamp-plugin-sdk</td>
@@ -2494,7 +2532,7 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     </tr>
     <tr>
         <td class="package">wt</td>
-        <td class="website"><a href="http://witty.sourceforge.net/">Wt</a></td>
+        <td class="website"><a href="http://www.webtoolkit.eu">Wt</a></td>
     </tr>
     <tr>
         <td class="package">wxwidgets</td>
@@ -2721,7 +2759,7 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         </p>
         <pre>make update-checksum-gettext</pre>
         <p>or:</p>
-        <pre>openssl sha1 pkg/gettext-x.y.z.tar.gz</pre>
+        <pre>openssl sha256 pkg/gettext-x.y.z.tar.gz</pre>
         <p>
         if you have already downloaded the package
         </p>
@@ -2939,6 +2977,7 @@ endef</pre>
     <li>Tony Theodore</li>
     <li>Martin Gerhardy</li>
     <li>Tiancheng "Timothy" Gu</li>
+    <li>Boris Nagaev</li>
     <li><a href="https://github.com/mxe/mxe/graphs/contributors">... and many other contributors</a></li>
     </ul>
 
@@ -4086,44 +4125,29 @@ endef</pre>
 </div>
 
 <div class="section">
-<h2 id="used-by">Projects which use MXE</h2>
+<h2 id="used-by">Projects which use MXE (alphabetical order)</h2>
 
     <ul class="compact-list">
-    <li>
-        <a href="http://toppler.sourceforge.net/">Tower Toppler</a>
-    </li>
-    <li>
-        <a href="http://pushover.sourceforge.net/">Pushover</a>
-    </li>
-    <li>
-        <a href="http://www.xs4all.nl/~thebeez/4tH/">The 4tH Compiler</a>
-    </li>
-    <li>
-        <a href="http://springrts.com/">Spring RTS</a>
-    </li>
-    <li>
-        <a href="http://ph.on.things.free.fr/projects/ube/">Ube</a>
-    </li>
-    <li>
-        <a href="http://marathon.sourceforge.net/">Marathon Aleph One</a>
-    </li>
     <li>
         <a href="http://sourceforge.net/projects/aorta/">Aorta</a>
     </li>
     <li>
-        <a href="http://msmtp.sourceforge.net/">msmtp</a>
+        <a href="https://bino3d.org/">Bino</a>
     </li>
     <li>
-        <a href="http://mpop.sourceforge.net/">mpop</a>
+        <a href="http://biosig.sourceforge.net/">BioSig</a>
     </li>
     <li>
         <a href="http://cvtool.sourceforge.net/">cvtool</a>
     </li>
     <li>
-        <a href="http://tux4kids.alioth.debian.org/tuxmath/">Tux Math</a>
+        <a href="http://www.qtrac.eu/diffpdf.html">DiffPDF</a>
     </li>
     <li>
-        <a href="http://tux4kids.alioth.debian.org/tuxtype/">Tux Typing</a>
+        <a href="http://www.ros.org/wiki/eros">Eros</a>
+    </li>
+    <li>
+        <a href="http://www.nongnu.org/galois/">Galois</a>
     </li>
     <li>
         <a href="http://gcompris.net/">GCompris</a>
@@ -4132,61 +4156,79 @@ endef</pre>
         <a href="http://www.nongnu.org/gta/">Generic Tagged Arrays</a>
     </li>
     <li>
-        <a href="http://qtads.sourceforge.net/">QTads</a>
-    </li>
-    <li>
-        <a href="http://ufoai.org/">UFO: Alien Invasion</a>
-    </li>
-    <li>
-        <a href="http://www.pokerth.net/">PokerTH</a>
-    </li>
-    <li>
-        <a href="https://www.tug.org/texworks/">TeXworks</a>
-    </li>
-    <li>
-        <a href="https://bino3d.org/">Bino</a>
-    </li>
-    <li>
-        <a href="http://www.ros.org/wiki/eros">Eros</a>
-    </li>
-    <li>
-        <a href="https://www.bunkus.org/videotools/mkvtoolnix/">MKVToolNix</a>
-    </li>
-    <li>
-        <a href="http://www.openscad.org/">OpenSCAD</a>
-    </li>
-    <li>
-        <a href="http://wz2100.net/">Warzone 2100</a>
-    </li>
-    <li>
-        <a href="http://lightspark.github.com/">Lightspark</a>
+        <a href="https://www.gnu.org/software/freedink/">GNU FreeDink</a>
     </li>
     <li>
         <a href="http://ifwiki.org/index.php/Hugor">Hugor</a>
     </li>
     <li>
-        <a href="http://www.qtrac.eu/diffpdf.html">DiffPDF</a>
+        <a href="http://lightspark.github.com/">Lightspark</a>
     </li>
     <li>
-        <a href="http://pdfgrep.sourceforge.net/">Pdfgrep</a>
-    </li>
-    <li>
-        <a href="http://spek-project.org/">Spek</a>
-    </li>
-    <li>
-        <a href="http://biosig.sourceforge.net/">BioSig</a>
-    </li>
-    <li>
-        <a href="https://www.gnu.org/software/freedink/">GNU FreeDink</a>
-    </li>
-    <li>
-        <a href="http://sigrok.org/">sigrok</a>
+        <a href="http://marathon.sourceforge.net/">Marathon Aleph One</a>
     </li>
     <li>
         <a href="https://www.maxr.org/">Mechanized Assault and eXploration Reloaded</a>
     </li>
     <li>
-        <a href="http://www.nongnu.org/galois/">Galois</a>
+        <a href="https://www.bunkus.org/videotools/mkvtoolnix/">MKVToolNix</a>
+    </li>
+    <li>
+        <a href="http://mpop.sourceforge.net/">mpop</a>
+    </li>
+    <li>
+        <a href="http://msmtp.sourceforge.net/">msmtp</a>
+    </li>
+    <li>
+        <a href="http://www.openscad.org/">OpenSCAD</a>
+    </li>
+    <li>
+        <a href="http://pdfgrep.sourceforge.net/">Pdfgrep</a>
+    </li>
+    <li>
+        <a href="http://www.pokerth.net/">PokerTH</a>
+    </li>
+    <li>
+        <a href="http://pushover.sourceforge.net/">Pushover</a>
+    </li>
+    <li>
+        <a href="http://qtads.sourceforge.net/">QTads</a>
+    </li>
+    <li>
+        <a href="http://sigrok.org/">sigrok</a>
+    </li>
+    <li>
+        <a href="http://spek-project.org/">Spek</a>
+    </li>
+    <li>
+        <a href="http://springrts.com/">Spring RTS</a>
+    </li>
+    <li>
+        <a href="http://www.xs4all.nl/~thebeez/4tH/">The 4tH Compiler</a>
+    </li>
+    <li>
+        <a href="https://www.tug.org/texworks/">TeXworks</a>
+    </li>
+    <li>
+        <a href="http://toppler.sourceforge.net/">Tower Toppler</a>
+    </li>
+    <li>
+        <a href="http://tux4kids.alioth.debian.org/tuxtype/">Tux Typing</a>
+    </li>
+    <li>
+        <a href="http://tux4kids.alioth.debian.org/tuxmath/">Tux Math</a>
+    </li>
+    <li>
+        <a href="http://ph.on.things.free.fr/projects/ube/">Ube</a>
+    </li>
+    <li>
+        <a href="http://ufoai.org/">UFO: Alien Invasion</a>
+    </li>
+    <li>
+        <a href="http://violetland.github.io/">Violetland</a>
+    </li>
+    <li>
+        <a href="http://wz2100.net/">Warzone 2100</a>
     </li>
     <li>
         <a href="https://sourceforge.net/projects/xfemm/">xfemm</a>

@@ -22,8 +22,6 @@ define $(PKG)_BUILD
     cd '$(1)' && autoreconf -fi -I'$(PREFIX)/$(TARGET)/share/aclocal'
     cd '$(1)' && ./configure \
         $(MXE_CONFIGURE_OPTS) \
-        --disable-modules \
-        --with-included-loaders \
         --without-gdiplus \
         LIBS="`'$(TARGET)-pkg-config' --libs libtiff-4`"
     $(MAKE) -C '$(1)' -j '$(JOBS)' install

@@ -22,6 +22,6 @@ index 470ad5e..eb8dbe8 100644
  #ifdef _MSC_VER                 /* Check if we are using MSVC, fileno is deprecated in favour */
  #define fileno _fileno          /* of _fileno */
  #endif
--- 
+--
 1.8.4
 

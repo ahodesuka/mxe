@@ -3,8 +3,8 @@
 
 PKG             := gtk2
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 2.24.22
-$(PKG)_CHECKSUM := 2175e25041244dc321e35dbdcf9cb5c371b455da
+$(PKG)_VERSION  := 2.24.28
+$(PKG)_CHECKSUM := f3c2f1a3728ed51d08054f6b4c7384fbf99477c0
 $(PKG)_SUBDIR   := gtk+-$($(PKG)_VERSION)
 $(PKG)_FILE     := gtk+-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := http://ftp.gnome.org/pub/gnome/sources/gtk+/$(call SHORT_PKG_VERSION,$(PKG))/$($(PKG)_FILE)
@@ -20,16 +20,18 @@ define $(PKG)_UPDATE
 endef
 
 define $(PKG)_BUILD
-    cd '$(1)' && ./configure \
+    cd '$(1)' && rm gtk/gtk.def && ./configure \
         $(MXE_CONFIGURE_OPTS) \
         --enable-explicit-deps \
         --disable-glibtest \
         --disable-modules \
         --disable-cups \
+		--disable-debug \
         --disable-test-print-backend \
         --disable-gtk-doc \
         --disable-man \
         --with-included-immodules \
+		--with-gdktarget=win32 \
         --without-x
     $(MAKE) -C '$(1)' -j '$(JOBS)' install bin_PROGRAMS= sbin_PROGRAMS= noinst_PROGRAMS=
 
@@ -38,5 +40,3 @@ define $(PKG)_BUILD
         '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-gtk2.exe' \
         `'$(TARGET)-pkg-config' gtk+-2.0 gmodule-2.0 --cflags --libs`
 endef
-
-$(PKG)_BUILD_SHARED =

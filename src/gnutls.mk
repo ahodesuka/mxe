@@ -35,6 +35,7 @@ define $(PKG)_BUILD
         --with-libregex-libs="-lgnurx" \
         --without-p11-kit \
         --disable-silent-rules \
+		CFLAGS="-O2" \
         CPPFLAGS='-DWINVER=0x0501 -DAI_ADDRCONFIG=0x0400 -DIPV6_V6ONLY=27' \
         LIBS='-lws2_32' \
         ac_cv_prog_AR='$(TARGET)-ar'

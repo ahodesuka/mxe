@@ -3,12 +3,12 @@
 
 PKG             := gstreamer
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 1.4.4
-$(PKG)_CHECKSUM := e2aba44c31b41f016bc4ce85539022e12a81d3f7
+$(PKG)_VERSION  := 1.4.5
+$(PKG)_CHECKSUM := 6c0fa50d42c039eb26c1f2eb5f8dd86ab35118e7
 $(PKG)_SUBDIR   := $(PKG)-$($(PKG)_VERSION)
 $(PKG)_FILE     := $(PKG)-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := http://gstreamer.freedesktop.org/src/$(PKG)/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc glib libxml2 pthreads
+$(PKG)_DEPS     := gcc glib pthreads
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://cgit.freedesktop.org/gstreamer/gstreamer/refs/tags' | \
@@ -21,10 +21,7 @@ define $(PKG)_BUILD
     $(SED) -i 's,glib-mkenums,$(PREFIX)/$(TARGET)/bin/glib-mkenums,g'       '$(1)'/gst/Makefile.in
     $(SED) -i 's,glib-genmarshal,$(PREFIX)/$(TARGET)/bin/glib-genmarshal,g' '$(1)'/gst/Makefile.in
     cd '$(1)' && ./configure \
-        --host='$(TARGET)' \
-        --build="`config.guess`" \
-        --prefix='$(PREFIX)/$(TARGET)' \
-        --disable-shared \
+		$(MXE_CONFIGURE_OPTS) \
         --disable-debug \
         --disable-check \
         --disable-tests \
@@ -34,5 +31,3 @@ define $(PKG)_BUILD
         --with-html-dir='$(1)/sink'
     $(MAKE) -C '$(1)' -j '$(JOBS)' install
 endef
-
-$(PKG)_BUILD_SHARED =

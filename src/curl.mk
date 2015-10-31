@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := f9386dbc49a9b90869d2faf4bc94b45b27edd31d
 $(PKG)_SUBDIR   := curl-$($(PKG)_VERSION)
 $(PKG)_FILE     := curl-$($(PKG)_VERSION).tar.lzma
 $(PKG)_URL      := http://curl.haxx.se/download/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc gnutls libidn libssh2
+$(PKG)_DEPS     := gcc openssl
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://curl.haxx.se/download/?C=M;O=D' | \
@@ -19,12 +19,9 @@ endef
 define $(PKG)_BUILD
     cd '$(1)' && ./configure \
         $(MXE_CONFIGURE_OPTS) \
-        --with-gnutls \
-        --without-ssl \
-        --with-libidn \
+        --with-ssl \
         --enable-sspi \
-        --enable-ipv6 \
-        --with-libssh2
+        --enable-ipv6
     $(MAKE) -C '$(1)' -j '$(JOBS)' install $(MXE_DISABLE_DOCS)
     ln -sf '$(PREFIX)/$(TARGET)/bin/curl-config' '$(PREFIX)/bin/$(TARGET)-curl-config'
 

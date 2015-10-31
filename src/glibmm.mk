@@ -3,8 +3,8 @@
 
 PKG             := glibmm
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 2.42.0
-$(PKG)_CHECKSUM := 8f316a4dfdaf49366028087085f04c0ba29cb5c2
+$(PKG)_VERSION  := 2.44.0
+$(PKG)_CHECKSUM := aa152d6f19bde44cd528b88f089c53913d0cd0ea
 $(PKG)_SUBDIR   := glibmm-$($(PKG)_VERSION)
 $(PKG)_FILE     := glibmm-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := http://ftp.gnome.org/pub/gnome/sources/glibmm/$(call SHORT_PKG_VERSION,$(PKG))/$($(PKG)_FILE)
